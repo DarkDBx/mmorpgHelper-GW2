@@ -1,4 +1,4 @@
-# <img src="assets/layout/little_botty_title.png" width="640">
+# <img src="assets/layout/little_botty_title.png" width="720">
 
 ## DESCRIPTION
 - Guild Wars 2 combat assistant, pixel bot and toolbox.
