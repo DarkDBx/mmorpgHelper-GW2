@@ -1,8 +1,9 @@
 from logging import debug, info, error
 from random import uniform
 from time import sleep
+from pydirectinput import keyDown, keyUp, press
 
-from helper import input_helper, image_helper, timer_helper, config_helper
+from helper import image_helper, timer_helper, config_helper
 from helper.timer_helper import TIMER_STOPPED
 
 
@@ -28,9 +29,9 @@ timer1 = timer_helper.TimerHelper('timer1')
 
 
 def press_combo(key):
-    input_helper.keyDown(comboKey)
-    input_helper.press(key)
-    input_helper.keyUp(comboKey)
+    keyDown(comboKey)
+    press(key)
+    keyUp(comboKey)
 
 
 def rotation():
@@ -64,22 +65,22 @@ def combat_rotation(value):
             debug('Use soulbeast skillset')
             # health check
             if not image_helper.pixel_matches_color(960,1006, 156,19,2) and image_helper.locate_needle(SKILLPATH+value+'\\06.png', conf=0.9): # heal below 60%
-                input_helper.press(skill6)
+                press(skill6)
                 info('Execute ability 6')
                 sleep(.75)
             elif not image_helper.pixel_matches_color(960,995, 178,27,5) and image_helper.locate_needle(SKILLPATH+value+'\\07.png', conf=0.9): # below 70%
-                input_helper.press(skill7)
+                press(skill7)
                 info('Execute ability 7')
             elif not image_helper.pixel_matches_color(960,987, 181,25,5) and image_helper.locate_needle(SKILLPATH+value+'\\09.png', conf=0.9): # below 80%
-                input_helper.press(skill9)
+                press(skill9)
                 info('Execute ability 9')
             # class skill checks
             elif image_helper.locate_needle(SKILLPATH+value+'\\10.png', conf=0.9):
-                input_helper.press(skill10)
+                press(skill10)
                 info('Execute ability 10')
                 sleep(.25)
             elif image_helper.locate_needle(SKILLPATH+value+'\\08.png', conf=0.9):
-                input_helper.press(skill8)
+                press(skill8)
                 info('Execute ability 8')
             elif image_helper.locate_needle(SKILLPATH+value+'\\s01.png', conf=0.9):
                 press_combo('1')
@@ -98,7 +99,7 @@ def combat_rotation(value):
                 info('Execute ability shift+3')
                 sleep(.75)
             elif image_helper.locate_needle(SKILLPATH+'swap.png', conf=0.9):
-                input_helper.press('q')
+                press('q')
                 info('Execute ability weapon swap')
                 sleep(.25)
                 press_combo('4')
@@ -110,19 +111,19 @@ def combat_rotation(value):
                     sleep(.25)
             # standard rotation
             elif image_helper.locate_needle(SKILLPATH+value+'\\03.png', conf=0.9) or image_helper.locate_needle(SKILLPATH+value+'\\03-2.png', conf=0.9):
-                input_helper.press(skill3)
+                press(skill3)
                 info('Execute ability 3')
                 sleep(.5)
             elif image_helper.locate_needle(SKILLPATH+value+'\\02.png', conf=0.9) or image_helper.locate_needle(SKILLPATH+value+'\\02-2.png', conf=0.9):
-                input_helper.press(skill2)
+                press(skill2)
                 info('Execute ability 2')
                 sleep(.5)
             elif image_helper.locate_needle(SKILLPATH+value+'\\05.png', conf=0.9) or image_helper.locate_needle(SKILLPATH+value+'\\05-2.png', conf=0.9):
-                input_helper.press(skill5)
+                press(skill5)
                 info('Execute ability 5')
                 sleep(.5)
             elif image_helper.locate_needle(SKILLPATH+value+'\\04.png', conf=0.9) or image_helper.locate_needle(SKILLPATH+value+'\\04-2.png', conf=0.9):
-                input_helper.press(skill4)
+                press(skill4)
                 info('Execute ability 4')
                 sleep(.5)
 

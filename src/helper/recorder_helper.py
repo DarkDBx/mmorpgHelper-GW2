@@ -6,7 +6,7 @@ from pynput import keyboard as ke
 from pynput.keyboard import Controller as Controller_k, Key
 from pynput.mouse import Controller as Controller_m, Button
 
-from helper import process_helper, input_helper
+from helper import process_helper, mouse_helper
 
 
 dic = {
@@ -121,7 +121,7 @@ class Replay:
             y = action[4]
 
             if action[1][:7] == "Button.":
-                input_helper.move_smooth(x, y, tm)
+                mouse_helper.move_smooth(x, y, tm)
                 #time.sleep(tm)
                 #self.mouse.position = (x, y)
                 try:
@@ -133,7 +133,7 @@ class Replay:
                     error("Unknown key " + str(action[2]))
 
             elif action[1] == "scroll":
-                input_helper.move_smooth(x, y, tm)
+                mouse_helper.move_smooth(x, y, tm)
                 #time.sleep(tm)
                 #self.mouse.position = (x, y)
                 self.mouse.scroll(None, action[2])
