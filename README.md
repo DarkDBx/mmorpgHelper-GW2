@@ -1,4 +1,4 @@
-# <img src="assets/layout/little_botty_title.png" width="720">
+# <img src="assets/layout/mmorpg_helper_title.png" width="720">
 
 ## DESCRIPTION
 - Guild Wars 2 combat assistant, pixel bot and toolbox.
@@ -33,5 +33,6 @@
 
 
 Support me: https://patreon.com/DarkDBx
+Tips here: https://paypal.me/darkdb?country.x=CH&locale.x=de_DE
 
 

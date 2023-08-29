@@ -10,7 +10,7 @@ from engine import overlay
 from helper import config_helper
 
 
-APPNAME = 'LittleBotty'
+APPNAME = 'mmorpgHelper'
 APPVERSION = 'v1.0.1'
 
 
