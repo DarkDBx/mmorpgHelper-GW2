@@ -1,4 +1,4 @@
-# <img src="assets/layout/mmorpg_helper_title.png" width="720">
+# <img src="assets/layout/mmorpg_helper_title.png">
 
 ## DESCRIPTION
 - Guild Wars 2 combat assistant, pixel bot and toolbox.
