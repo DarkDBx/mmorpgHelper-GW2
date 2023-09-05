@@ -7,11 +7,10 @@
 
 
 ## PARAMETER
-- Set key assignment in config.yml,
-    use shift or ctrl + (1 - 5) for your specialization abilitys.
 - Recomended use of windowed fullscreen with 1920x1080 resolution.
 - Recomended use of US/EN or standard keyboard layout.
 - Set a different appname(anticheat) and adjust the key assignment in config.yml.
+    For proper use of profession abillitys, change game keybinds or combat.py.
 - Python 3.9 interpreter, see requirements.txt.
 
 

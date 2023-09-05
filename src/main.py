@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-from logging import getLogger, info, error, INFO, DEBUG
+from logging import getLogger, info, error, INFO
 from sys import exit, argv
 from PyQt5.QtWidgets import QApplication
 
@@ -11,7 +11,7 @@ from helper import config_helper
 
 
 APPNAME = 'mmorpgHelper'
-APPVERSION = 'v1.0.3-gw2'
+APPVERSION = 'v1.0.4-gw2'
 
 
 def main():
@@ -20,7 +20,7 @@ def main():
     app_gui.show()
 
     cfg = config_helper.read_config()
-    getLogger().setLevel(DEBUG)
+    getLogger().setLevel(INFO)
 
     info(('====== %s %s ======') % (APPNAME, APPVERSION))
     info('Starting up bot engine...')

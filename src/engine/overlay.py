@@ -29,7 +29,7 @@ class Overlay(QMainWindow):
         self.setWindowIcon(QIcon('.\\assets\\layout\\mmorpg_helper.ico'))
         QApplication.setStyle(QStyleFactory.create('Fusion'))
         self.setWindowTitle(self.name)
-        self.setGeometry(1425, 925, 470, 170)
+        self.setGeometry(1425, 625, 470, 170)
         self.setFixedSize(470, 170)
         visible_window = QWidget(self)
         visible_window.setFixedSize(470, 170)
@@ -37,6 +37,10 @@ class Overlay(QMainWindow):
         add_hotkey('end', lambda: self.on_press('exit'))
         add_hotkey('del', lambda: self.on_press('pause'))
         add_hotkey('capslock', lambda: self.on_press('pause'))
+        add_hotkey('capslock+w', lambda: self.on_press('pause'))
+        add_hotkey('capslock+a', lambda: self.on_press('pause'))
+        add_hotkey('capslock+s', lambda: self.on_press('pause'))
+        add_hotkey('capslock+d', lambda: self.on_press('pause'))
         
         self.createDropdownBox()
         self.createStartBox()
@@ -81,7 +85,7 @@ class Overlay(QMainWindow):
 
         handler = logging_helper.Handler(self)
         log_text_box = QPlainTextEdit(self)
-        log_text_box.setStyleSheet('background-color: rgba(255,255,255, 0); color: white')
+        log_text_box.setStyleSheet('background-color: rgba(255,255,255, 0); color: rgb(0,0,0);')
         log_text_box.setReadOnly(True)
         getLogger().addHandler(handler)
         #getLogger().setLevel(DEBUG)

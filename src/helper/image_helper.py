@@ -54,7 +54,7 @@ def line_detection(line_type='path'):
     if type(lines) is ndarray:
         for points in lines:
             x,y, w,h=points[0]
-            info('found line type ' + line_type + ' at ' + str(x) + ', ' + str(y))
+            info('found type ' + line_type + ' at ' + str(x) + ', ' + str(y))
             return x, y
     return False
 
