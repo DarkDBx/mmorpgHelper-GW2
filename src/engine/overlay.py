@@ -1,4 +1,4 @@
-from logging import getLogger, info
+from logging import getLogger, info, FileHandler
 from keyboard import add_hotkey
 from threading import Thread, Lock
 from time import sleep
@@ -29,10 +29,10 @@ class Overlay(QMainWindow):
         self.setWindowIcon(QIcon('.\\assets\\layout\\mmorpg_helper.ico'))
         QApplication.setStyle(QStyleFactory.create('Fusion'))
         self.setWindowTitle(self.name)
-        self.setGeometry(1425, 625, 470, 170)
-        self.setFixedSize(470, 170)
+        self.setGeometry(1475, 625, 400, 170)
+        self.setFixedSize(400, 170)
         visible_window = QWidget(self)
-        visible_window.setFixedSize(470, 170)
+        visible_window.setFixedSize(400, 170)
         
         add_hotkey('end', lambda: self.on_press('exit'))
         add_hotkey('del', lambda: self.on_press('pause'))
@@ -61,7 +61,7 @@ class Overlay(QMainWindow):
 
     # prepare dropdownBox
     def update_class(self, item, value=None):
-        info('Preset '+item+': '+value)
+        info('Preset ' + item + ': ' + value + 'is initialized')
         config_helper.save_config(item, value)
 
 
@@ -71,7 +71,7 @@ class Overlay(QMainWindow):
 
     def get_class(self):
         result = []
-        class_array = ['Harbinger', 'Willbender', 'Vindicator', 'Untamed', 'Soulbeast', 'Specter']
+        class_array = ['Soulbeast PvP', 'Soulbeast PvE']
         for class_var in class_array:
             result = QStandardItem(class_var)
             self.model.appendRow(result)
@@ -83,10 +83,12 @@ class Overlay(QMainWindow):
         self.loggerConsole = QWidget()
         layout = QHBoxLayout()
 
-        handler = logging_helper.Handler(self)
         log_text_box = QPlainTextEdit(self)
-        log_text_box.setStyleSheet('background-color: rgba(255,255,255, 0); color: rgb(0,0,0);')
+        log_text_box.setStyleSheet('background-color: rgba(255,255,255, 0); color: rgb(0,0,255);')
         log_text_box.setReadOnly(True)
+        handler = FileHandler('.\\log\\mmorpgHelper.log')
+        getLogger().addHandler(handler)
+        handler = logging_helper.Handler(self)
         getLogger().addHandler(handler)
         #getLogger().setLevel(DEBUG)
         handler.new_record.connect(log_text_box.appendPlainText)
@@ -153,7 +155,7 @@ class Overlay(QMainWindow):
 
     def on_press(self, key):
         if key == 'exit':
-            info('_EXIT')
+            info('*** EXIT ***')
             if self.running:
                 self.running = False
                 self.rotation_thread.join()
@@ -162,10 +164,10 @@ class Overlay(QMainWindow):
             self.set_pause(not self.should_pause())
             if self.pause == False:
                 self.pause = True
-                info('_PAUSE')
+                info('*** PAUSE ***')
             else:
                 self.pause = False
-                info('_RUN')
+                info('*** RUN ***')
             
 
     def should_pause(self):
@@ -190,7 +192,7 @@ class Overlay(QMainWindow):
 
 
     def get_rotation(self):
-        info('LittleHelper started')
+        info('mmorpgHelper started combat.rotation')
         #self.proc.set_window_pos()
         self.proc.set_foreground_window()
         self.running = True
@@ -200,7 +202,7 @@ class Overlay(QMainWindow):
                 sleep(0.25)
             combat.rotation()
 
-        info("LittleHelper stopped")
+        info("mmorpgHelper stopped combat.rotation")
 
 
     def littlehelper_toolbox(self):

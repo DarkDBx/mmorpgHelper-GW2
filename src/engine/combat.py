@@ -36,18 +36,10 @@ def press_combo(key):
 
 def rotation():
     """set up the skill rotation for a specific class, by the config value"""
-    if class_var == 'Harbinger':
-        combat_rotation('har')
-    elif class_var == 'Willbender':
-        combat_rotation('wil')
-    elif class_var == 'Vindicator':
-        combat_rotation('vin')
-    elif class_var == 'Untamed':
-        combat_rotation('unt')
-    elif class_var == 'Soulbeast':
-        combat_rotation('sb')
-    elif class_var == 'Specter':
-        combat_rotation('spe')
+    if class_var == 'Soulbeast PvP':
+        combat_rotation('sb_pvp')
+    elif class_var == 'Soulbeast PvE':
+        combat_rotation('sb_pve')
     else:
         error('No vaible class')
 
@@ -56,12 +48,9 @@ def combat_rotation(value):
     # target check
     if image_helper.pixel_matches_color(783,94, 147,33,18, 50) or image_helper.pixel_matches_color(783,99, 147,33,18, 50): # or image_helper.line_detection('mob') != False:
         # class check
-        if value == 'unt':
-            # https://guildjen.com/power-untamed-pvp-build/
-            debug('Use untamed skillset')
-            pass
-        elif value == 'sb':
+        if value == 'sb_pvp':
             # https://guildjen.com/sic-em-soulbeast-pvp-build/
+            # https://guildjen.com/sic-em-soulbeast-roaming-build/
             debug('Use soulbeast skillset')
             # health check
             if not image_helper.pixel_matches_color(960,1006, 156,19,2) and image_helper.locate_needle(SKILLPATH+value+'\\06.png', conf=0.9): # heal below 60%
@@ -125,24 +114,32 @@ def combat_rotation(value):
                     info('Use ability shift+5, next execution in ' + str(sleep_timing) + ' seconds')
                     sleep(sleep_timing)
             # standard rotation
-            elif image_helper.locate_needle(SKILLPATH+value+'\\03.png', conf=0.9) or image_helper.locate_needle(SKILLPATH+value+'\\03-2.png', conf=0.9):
-                press(skill3)
-                sleep_timing = uniform(0.55, 0.6)
-                info('Use ability 3, next execution in ' + str(sleep_timing) + ' seconds')
-                sleep(sleep_timing)
-            elif image_helper.locate_needle(SKILLPATH+value+'\\02.png', conf=0.9) or image_helper.locate_needle(SKILLPATH+value+'\\02-2.png', conf=0.9):
+            elif image_helper.locate_needle(SKILLPATH+value+'\\02.png', conf=0.9):
                 press(skill2)
-                sleep_timing = uniform(0.55, 0.6)
-                info('Use ability 2, next execution in ' + str(sleep_timing) + ' seconds')
+                sleep_timing = uniform(2.55, 2.6)
+                info('Use ability 2; next execution in ' + str(sleep_timing) + ' seconds')
                 sleep(sleep_timing)
-            elif image_helper.locate_needle(SKILLPATH+value+'\\05.png', conf=0.9) or image_helper.locate_needle(SKILLPATH+value+'\\05-2.png', conf=0.9):
-                press(skill5)
-                sleep_timing = uniform(0.55, 0.6)
-                info('Use ability 5, next execution in ' + str(sleep_timing) + ' seconds')
-                sleep(sleep_timing)
-            elif image_helper.locate_needle(SKILLPATH+value+'\\04.png', conf=0.9) or image_helper.locate_needle(SKILLPATH+value+'\\04-2.png', conf=0.9):
+            elif image_helper.locate_needle(SKILLPATH+value+'\\04.png', conf=0.9):
                 press(skill4)
                 sleep_timing = uniform(0.55, 0.6)
                 info('Use ability 4, next execution in ' + str(sleep_timing) + ' seconds')
                 sleep(sleep_timing)
+            elif image_helper.locate_needle(SKILLPATH+value+'\\02-2.png', conf=0.9):
+                press(skill2)
+                sleep_timing = uniform(0.8, 0.85)
+                info('Use ability 2, next execution in ' + str(sleep_timing) + ' seconds')
+                sleep(sleep_timing)
+            elif image_helper.locate_needle(SKILLPATH+value+'\\05-2.png', conf=0.9):
+                press(skill5)
+                sleep_timing = uniform(0.55, 0.6)
+                info('Use ability 5, next execution in ' + str(sleep_timing) + ' seconds')
+                sleep(sleep_timing)
+            elif image_helper.locate_needle(SKILLPATH+value+'\\03-2.png', conf=0.9):
+                press(skill3)
+                sleep_timing = uniform(0.8, 0.85)
+                info('Use ability 3, next execution in ' + str(sleep_timing) + ' seconds')
+                sleep(sleep_timing)
+        elif value == 'sb_pve':
+            # https://guildjen.com/power-soulbeast-build/
+            pass
 

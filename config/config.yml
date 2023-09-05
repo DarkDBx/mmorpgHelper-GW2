@@ -1,14 +1,14 @@
-class: Soulbeast
-name: 'Notepad'
-comboKey: 'shift'
+class: Soulbeast PvP
+comboKey: shift
+name: Notepad
 skill01: '1'
 skill02: '2'
 skill03: '3'
 skill04: '4'
 skill05: '5'
-skill06: 'r'
-skill07: 'z'
-skill08: 'x'
-skill09: 'c'
-skill10: 'e'
-swap: 'q'
+skill06: r
+skill07: z
+skill08: x
+skill09: c
+skill10: e
+swap: q

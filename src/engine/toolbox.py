@@ -37,7 +37,7 @@ class Toolbox(QDialog):
 
         add_hotkey('insert', lambda: self.on_press('image'))
         add_hotkey('home', lambda: self.on_press('color'))
-        add_hotkey('end', lambda: self.on_press('exit'))
+        add_hotkey('end', lambda: self.on_press('stop'))
         
         self.createImageCrop()
         self.createRecordBox()
@@ -254,18 +254,14 @@ class Toolbox(QDialog):
             self.get_color_from_pos()
         elif key == 'image':
             self.get_image_from_pos()
-        elif key == 'exit':
-            info('_EXIT')
-            if self.running:
-                self.running = False
-                self.replay_thread.join()
-                info('Replay stopped')
+        elif key == 'stop':
+            self.stop()
             
 
     def get_color_from_pos(self):
         """debug function, print coordinates and rgb color at mouse position"""
         x,y, r,g,b = image_helper.get_pixel_color_at_cursor()
-        info("Position and color: x,y, r,g,b=%d,%d, %d,%d,%d" % (x,y, r,g,b))
+        info("Position and color at mouse position:\nx,y, r,g,b=%d,%d, %d,%d,%d" % (x,y, r,g,b))
 
 
     def get_image_from_pos(self):
@@ -274,7 +270,7 @@ class Toolbox(QDialog):
             error("Filename already taken")
         else:
             x,y = image_helper.get_image_at_cursor(self.image_name, self.image_path, self.x_coord, self.y_coord)
-            info("File saved as: %s location: %s position: x=%d, y=%d, size=%d, %d" % (str(self.image_name+'.png'),self.image_path,x,y,self.x_coord,self.y_coord))
+            info("File saved as: %s location: %s\nposition: x=%d, y=%d, size=%d, %d" % (str(self.image_name+'.png'),self.image_path,x,y,self.x_coord,self.y_coord))
             pixmap = QPixmap(self.image_path+self.image_name)
             self.imageLabel.setPixmap(pixmap)
             self.imageLabel.resize(pixmap.width(), pixmap.height())
