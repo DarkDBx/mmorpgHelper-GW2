@@ -5,14 +5,15 @@ from time import sleep
 from sys import exit
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon, QStandardItemModel, QStandardItem
-from PyQt5.QtWidgets import (QApplication, QComboBox, QPlainTextEdit, QMainWindow, QGridLayout,
-                             QGroupBox, QPushButton, QHBoxLayout, QStyleFactory, QWidget)
+from PyQt5.QtWidgets import (QApplication, QComboBox, QPlainTextEdit, QGridLayout, QGroupBox,
+                             QPushButton, QHBoxLayout, QStyleFactory, QWidget, QCheckBox)
 
-from helper import config_helper, logging_helper, process_helper
-from engine import combat, toolbox
+from lib import config_helper, logging_helper, process_helper
+from gui import toolbox, hud
+from bot import combat
 
 
-class Overlay(QMainWindow):
+class Overlay(QWidget):
     def __init__(self, parent=None):
         super(Overlay, self).__init__(parent)
         self.running = False
@@ -20,19 +21,18 @@ class Overlay(QMainWindow):
         self._lock = Lock()
         self.pause_req = False
         self.cfg = config_helper.read_config()
-        self.name = self.cfg['name']
+        self.appName = self.cfg['appName']
         self.proc = process_helper.ProcessHelper()
+        self.app_hud = hud.HUD()
 
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.setWindowFlag(Qt.WindowStaysOnTopHint)
         self.setWindowIcon(QIcon('.\\assets\\layout\\mmorpg_helper.ico'))
         QApplication.setStyle(QStyleFactory.create('Fusion'))
-        self.setWindowTitle(self.name)
+        self.setWindowTitle(self.appName)
         self.setGeometry(1475, 625, 400, 170)
         self.setFixedSize(400, 170)
-        visible_window = QWidget(self)
-        visible_window.setFixedSize(400, 170)
         
         add_hotkey('end', lambda: self.on_press('exit'))
         add_hotkey('del', lambda: self.on_press('pause'))
@@ -41,6 +41,10 @@ class Overlay(QMainWindow):
         add_hotkey('capslock+a', lambda: self.on_press('pause'))
         add_hotkey('capslock+s', lambda: self.on_press('pause'))
         add_hotkey('capslock+d', lambda: self.on_press('pause'))
+        add_hotkey('capslock+w+a', lambda: self.on_press('pause'))
+        add_hotkey('capslock+w+d', lambda: self.on_press('pause'))
+        add_hotkey('capslock+s+a', lambda: self.on_press('pause'))
+        add_hotkey('capslock+s+d', lambda: self.on_press('pause'))
         
         self.createDropdownBox()
         self.createStartBox()
@@ -55,25 +59,27 @@ class Overlay(QMainWindow):
         mainLayout.addWidget(self.loggerConsole, 1, 0, 1, 3)
         mainLayout.setRowStretch(1, 1)
         mainLayout.setColumnStretch(1, 1)
-        self.setCentralWidget(visible_window)
-        visible_window.setLayout(mainLayout)
+        self.setLayout(mainLayout)
+        
+        if self.cfg['showHUD'] == '1':
+            self.show_hud()
 
 
     # prepare dropdownBox
-    def update_class(self, item, value=None):
-        info('Preset ' + item + ': ' + value + 'is initialized')
+    def update_config(self, item, value=None):
+        info('Config item "' + item + '" set to new value: ' + value)
         config_helper.save_config(item, value)
 
 
     def passCurrentText(self):
-        self.update_class('class', self.ComboBox.currentText())
+        self.update_config('playerClass', self.ComboBox.currentText())
             
 
     def get_class(self):
         result = []
         class_array = ['Soulbeast PvP', 'Soulbeast PvE']
-        for class_var in class_array:
-            result = QStandardItem(class_var)
+        for playerClass in class_array:
+            result = QStandardItem(playerClass)
             self.model.appendRow(result)
         self.ComboBox.setCurrentIndex(0)
 
@@ -125,12 +131,22 @@ class Overlay(QMainWindow):
     def createStartBox(self):
         self.startBox = QGroupBox()
         layout = QHBoxLayout()
+        
+        toggleHUD = QCheckBox("HUD")
+        toggleHUD.setStyleSheet('color: rgb(0,0,255);')
+        if self.cfg['showHUD'] == '1':
+            toggleHUD.setChecked(True)
+        else:
+            toggleHUD.setChecked(False)
+        toggleHUD.stateChanged.connect(lambda: self.set_hud())
 
         toggleAssistButton = QPushButton("ASSISTANT")
         toggleAssistButton.setCheckable(False)
         toggleAssistButton.setChecked(False)
         toggleAssistButton.clicked.connect(lambda: self.get_rotation_thread())
 
+        layout.addStretch(1)
+        layout.addWidget(toggleHUD)
         layout.addStretch(1)
         layout.addWidget(toggleAssistButton)
         layout.addStretch(1)
@@ -145,7 +161,7 @@ class Overlay(QMainWindow):
         toggleToolButton = QPushButton("TOOLBOX")
         toggleToolButton.setCheckable(False)
         toggleToolButton.setChecked(False)
-        toggleToolButton.clicked.connect(self.littlehelper_toolbox)
+        toggleToolButton.clicked.connect(self.show_toolbox)
 
         layout.addStretch(1)
         layout.addWidget(toggleToolButton)
@@ -183,8 +199,19 @@ class Overlay(QMainWindow):
         self._lock.release()
 
 
+    def set_hud(self):
+        cfg = config_helper.read_config()
+        if cfg['showHUD'] == '1':
+            self.update_config('showHUD', '0')
+            self.hide_hud()
+        else:
+            self.update_config('showHUD', '1')
+            self.show_hud()
+
+
     def get_rotation_thread(self):
         self.rotation_thread = Thread(target=lambda: self.get_rotation())
+
         if not self.rotation_thread.is_alive():
             self.rotation_thread = None
             self.rotation_thread = Thread(target=lambda: self.get_rotation())
@@ -192,7 +219,7 @@ class Overlay(QMainWindow):
 
 
     def get_rotation(self):
-        info('mmorpgHelper started combat.rotation')
+        info('Starting up combat')
         #self.proc.set_window_pos()
         self.proc.set_foreground_window()
         self.running = True
@@ -202,10 +229,24 @@ class Overlay(QMainWindow):
                 sleep(0.25)
             combat.rotation()
 
-        info("mmorpgHelper stopped combat.rotation")
+        info("Closing combat")
 
 
-    def littlehelper_toolbox(self):
+    def show_toolbox(self):
         app_toolbox = toolbox.Toolbox()
         app_toolbox.show()
+        
+        info('Starting up toolbox')
+
+
+    def show_hud(self):
+        self.app_hud.show()
+        
+        info('Starting up hud')
+
+
+    def hide_hud(self):
+        self.app_hud.close()
+        
+        info('Closing hud')
 

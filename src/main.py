@@ -6,25 +6,25 @@ from logging import getLogger, info, error, INFO
 from sys import exit, argv
 from PyQt5.QtWidgets import QApplication
 
-from engine import overlay
-from helper import config_helper
+from lib import config_helper
+from gui import overlay
 
 
 APPNAME = 'mmorpgHelper'
-APPVERSION = 'v1.0.4.2-gw2'
+APPVERSION = 'v1.0.4.0012-gw2'
 
 
 def main():
+    cfg = config_helper.read_config()
+    getLogger().setLevel(INFO)
+
     app = QApplication(argv)
     app_gui = overlay.Overlay()
     app_gui.show()
 
-    cfg = config_helper.read_config()
-    getLogger().setLevel(INFO)
-
-    info(('====== %s %s ======') % (APPNAME, APPVERSION))
-    info('Starting up bot engine...')
-    info('Preset class ' + cfg['class'] + ' is initialized')
+    info(('### %s ### %s ###') % (APPNAME, APPVERSION))
+    info('Starting up gui')
+    info('Config item "playerClass" set to: ' + cfg['playerClass'])
     
     exit(app.exec_())
 

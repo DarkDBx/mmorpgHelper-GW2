@@ -1,6 +1,7 @@
-class: Soulbeast PvP
+appName: Notepad
 comboKey: shift
-name: Notepad
+playerClass: Soulbeast PvP
+showHUD: '0'
 skill01: '1'
 skill02: '2'
 skill03: '3'
@@ -11,4 +12,5 @@ skill07: z
 skill08: x
 skill09: c
 skill10: e
-swap: q
+stompKey: f
+weaponSwap: q

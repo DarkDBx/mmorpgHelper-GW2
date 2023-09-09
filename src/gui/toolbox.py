@@ -3,13 +3,13 @@ from os import listdir, path
 from keyboard import add_hotkey
 from threading import Thread
 from PyQt5.QtGui import QIcon, QPixmap, QStandardItemModel, QStandardItem, QIntValidator
-from PyQt5.QtWidgets import (QApplication, QComboBox, QDialog, QGridLayout, QLineEdit,
+from PyQt5.QtWidgets import (QApplication, QComboBox, QWidget, QGridLayout, QLineEdit,
                             QGroupBox, QHBoxLayout, QLabel, QPushButton, QStyleFactory)
 
-from helper import recorder_helper, image_helper, config_helper
+from lib import recorder_helper, image_helper, config_helper
 
 
-class Toolbox(QDialog):
+class Toolbox(QWidget):
     def __init__(self, parent=None):
         super(Toolbox, self).__init__(parent)
         self.running = False
@@ -23,13 +23,13 @@ class Toolbox(QDialog):
         self.started = False
         self.record = recorder_helper.Record()
         self.cfg = config_helper.read_config()
-        self.name = self.cfg['name']
+        self.appName = self.cfg['appName']
         
         self.setWindowIcon(QIcon('.\\assets\\layout\\mmorpg_helper.ico'))
         QApplication.setStyle(QStyleFactory.create('Fusion'))
-        self.setWindowTitle(self.name)
-        self.setGeometry(700, 300, 600, 250)
-        self.setFixedSize(600, 250)
+        self.setWindowTitle(self.appName)
+        self.setGeometry(1375, 350, 500, 220)
+        self.setFixedSize(500, 220)
         self.label = QLabel(self)
         self.pixmap = QPixmap('.\\assets\\layout\\mmorpg_helper_background.png') 
         self.label.setPixmap(self.pixmap) 
@@ -143,28 +143,27 @@ class Toolbox(QDialog):
     # imageCrop
     def createImageCrop(self):
         self.imageCrop = QGroupBox('Image Crop')
-        self.imageCrop.setStyleSheet('QGroupBox:title {color: rgb(255,255,0);}')
         layout = QHBoxLayout()
 
         self.text_box1 = QLineEdit(str(self.image_name))
-        self.text_box1.setStyleSheet('background:rgb(204,153,51);')
+        self.text_box1.setStyleSheet('background: rgb(204,153,51);')
         self.text_box1.setFixedSize(80, 20)
         self.text_box1.textChanged.connect(self.set_image_name)
 
         self.text_box2 = QLineEdit(str(self.image_path))
-        self.text_box2.setStyleSheet('background:rgb(204,153,51);')
+        self.text_box2.setStyleSheet('background: rgb(204,153,51);')
         self.text_box2.setFixedSize(240, 20)
         self.text_box2.textChanged.connect(self.set_image_path)
 
         self.text_box3 = QLineEdit(str(self.x_coord))
-        self.text_box3.setStyleSheet('background:rgb(204,153,51);')
+        self.text_box3.setStyleSheet('background: rgb(204,153,51);')
         self.text_box3.setFixedSize(25, 20)
         self.text_box3.setValidator(QIntValidator())
         self.text_box3.setMaxLength(2)
         self.text_box3.textChanged.connect(self.set_x_coord)
 
         self.text_box4 = QLineEdit(str(self.y_coord))
-        self.text_box4.setStyleSheet('background:rgb(204,153,51);')
+        self.text_box4.setStyleSheet('background: rgb(204,153,51);')
         self.text_box4.setFixedSize(25, 20)
         self.text_box4.setValidator(QIntValidator())
         self.text_box4.setMaxLength(2)
@@ -191,7 +190,6 @@ class Toolbox(QDialog):
     # recordBox
     def createRecordBox(self):
         self.recordBox = QGroupBox('Recorder')
-        self.recordBox.setStyleSheet('QGroupBox:title {color: rgb(255,255,0);}')
         layout = QHBoxLayout()
 
         toggleStartButton = QPushButton("Start")
@@ -205,7 +203,7 @@ class Toolbox(QDialog):
         toggleStopButton.clicked.connect(self.stop)
 
         self.saveTextBox = QLineEdit(str(self.file_name))
-        self.saveTextBox.setStyleSheet('background:rgb(204,153,51);')
+        self.saveTextBox.setStyleSheet('background: rgb(204,153,51);')
         self.saveTextBox.setFixedSize(80, 20)
         self.saveTextBox.textChanged.connect(self.set_file_name)
         
@@ -228,7 +226,6 @@ class Toolbox(QDialog):
     # replayBox
     def createReplayBox(self):
         self.replayBox = QGroupBox('Player')
-        self.replayBox.setStyleSheet('QGroupBox:title {color: rgb(255,255,0);}')
         layout = QHBoxLayout()
 
         self.model = QStandardItemModel()
