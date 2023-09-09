@@ -11,7 +11,7 @@ from gui import overlay
 
 
 APPNAME = 'mmorpgHelper'
-APPVERSION = 'v1.0.4.0012-gw2'
+APPVERSION = 'v1.0.4.0013-gw2'
 
 
 def main():

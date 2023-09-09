@@ -38,6 +38,22 @@ def pixel_matches_color(x,y, exR,exG,exB, tolerance=25):
     return False
 
 
+def pixel_matches_color_region(r,g,b, start=(1018,887), end=(393,107)):
+    x = int(end[0]-start[0] + 1)
+    y = int(end[1]-start[1] + 1)
+    
+    for x in range(start[0], end[0] + 1, 1):
+        for y in range(start[1], end[1] + 1, 1):
+            if pixel_matches_color(x,y, r,g,b):
+                debug("found position and color:\nx,y, r,g,b=%d,%d, %d,%d,%d" % (x,y, r,g,b))
+                return True
+
+            y = y + 1
+        x = x + 1
+    
+    return False
+
+
 def target_lines(max_dist, pos_x, pos_y):
     """Recognition of a line by a given color in the given screen region,
     returning distance to player"""

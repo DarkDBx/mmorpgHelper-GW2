@@ -19,6 +19,9 @@
     ability rotation, just use folder names in assets\skills\ like: sb_pvp\ or sb_pve\
     and assign the proper ability image to the correct number.
     Take a look at src\engine\combat.py and expand the function to your needs.
+- Use the hud + distance calculation along with your rotation(optional),
+    aim for the upper buddy, the target health bar is the indicator,
+    get inner circle for melee and outer for ranged combat.
 - Use the macro recorder to get a minigame or simple task done, atm for testing purpose.
 - With toolbox open: 'home' hotkey get coordinates and rgb colors at mouse cursor.
 - With toolbox open: 'insert' hotkey save image per parameters from gui at mouse cursor.

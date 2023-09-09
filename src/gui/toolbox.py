@@ -256,13 +256,13 @@ class Toolbox(QWidget):
             
 
     def get_color_from_pos(self):
-        """debug function, print coordinates and rgb color at mouse position"""
+        """debug function, print coordinates and rgb color at mouse cursor"""
         x,y, r,g,b = image_helper.get_pixel_color_at_cursor()
-        info("Position and color at mouse position:\nx,y, r,g,b=%d,%d, %d,%d,%d" % (x,y, r,g,b))
+        info("Position and color at mouse cursor:\nx,y, r,g,b=%d,%d, %d,%d,%d" % (x,y, r,g,b))
 
 
     def get_image_from_pos(self):
-        """debug function, print coordinates and save image at mouse position"""
+        """debug function, print coordinates and save image at mouse cursor"""
         if path.exists(self.image_path+self.image_name+'.png'):
             error("Filename already taken")
         else:

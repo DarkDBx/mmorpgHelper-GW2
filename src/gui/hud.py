@@ -19,8 +19,8 @@ class HUD(QWidget):
         self.setWindowIcon(QIcon('.\\assets\\layout\\mmorpg_helper.ico'))
         QApplication.setStyle(QStyleFactory.create('Fusion'))
         self.setWindowTitle(self.appName)
-        self.setGeometry(0, 100, 1700, 900)
-        self.setFixedSize(1700, 900)
+        self.setGeometry(85, 0, 1920, 980)
+        self.setFixedSize(1920, 980)
         
         self.hud_map()
 

@@ -10,9 +10,9 @@ from inc.timer_helper import TIMER_STOPPED
 
 SKILLPATH = ".\\assets\\skills\\"
 PLAYER_POS_X = 760
-PLAYER_POS_Y = 350
-ATTACKDIST = 160
-MELEEDIST = 50
+PLAYER_POS_Y = 500
+ATTACKDIST = 180
+MELEEDIST = 60
 
 
 effectRegion = (1018, 887, 1411, 994)
@@ -35,20 +35,17 @@ skill10 = cfg['skill10']
 timer1 = timer_helper.TimerHelper('timer1')
 
 
-def test_effects(file_name, region):
-    n = 1
-    for i in range(19):
-        if path.exists('.\\assets\\test\\' + file_name + str(n) + '.png'):
-            n += 1
-        else:
-            image_helper.get_image_at_position(file_name + str(n), region=region)
+def test_effect(file_name, region):
+    for i in range(1, 30):
+        if not path.exists('.\\assets\\test\\' + file_name + str(i) + '.png'):
+            image_helper.get_image_at_position(file_name + str(i), region=region)
             break
 
 
 def is_effect(effect, confidence):
     x, y = image_helper.locate_needle('.\\assets\\effects\\' + effect + '.png', conf=confidence, loctype='c', region=effectRegion)
     if x != -1 and y != -1:
-        test_effects(effect, region=(x, y, 12, 12))
+        #test_effect(effect, region=(x, y, 12, 12))
         return True
     return False
 
@@ -84,9 +81,9 @@ def combat_rotation(value):
     if image_helper.pixel_matches_color(783,94, 147,33,18) or image_helper.pixel_matches_color(784,94, 79,16,8):
         if cfg['showHUD'] == '1':
             dist = image_helper.target_lines(ATTACKDIST, PLAYER_POS_X, PLAYER_POS_Y)
+            info('Distance to target: ' + str(dist))
         else:
             dist = False
-        info('Distance to target: ' + str(dist))
     
         # self downed state
         if image_helper.pixel_matches_color(800,900, 101,2,8):
@@ -101,7 +98,7 @@ def combat_rotation(value):
                 debug('STUNNED')
             if is_effect('daze', 0.7):
                 debug('DAZED')
-            if is_effect('immobile', 0.9):
+            if is_effect('immobile', 0.96):
                 debug('IMMOBILE')
             if is_effect('chilled', 0.9):
                 debug('CHILLED')
