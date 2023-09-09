@@ -3,7 +3,7 @@ from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtWidgets import (QApplication, QGridLayout, QGroupBox,
                              QHBoxLayout, QLabel, QStyleFactory, QWidget)
 
-from lib import config_helper
+from inc import config_helper
 
 
 class HUD(QWidget):

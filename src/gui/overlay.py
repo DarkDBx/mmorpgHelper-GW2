@@ -8,7 +8,7 @@ from PyQt5.QtGui import QIcon, QStandardItemModel, QStandardItem
 from PyQt5.QtWidgets import (QApplication, QComboBox, QPlainTextEdit, QGridLayout, QGroupBox,
                              QPushButton, QHBoxLayout, QStyleFactory, QWidget, QCheckBox)
 
-from lib import config_helper, logging_helper, process_helper
+from inc import config_helper, logging_helper, process_helper
 from gui import toolbox, hud
 from bot import combat
 

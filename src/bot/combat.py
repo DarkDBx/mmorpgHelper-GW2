@@ -4,8 +4,8 @@ from time import sleep
 from pydirectinput import keyDown, keyUp, press
 from os import path
 
-from lib import image_helper, timer_helper, config_helper
-from lib.timer_helper import TIMER_STOPPED
+from inc import image_helper, timer_helper, config_helper
+from inc.timer_helper import TIMER_STOPPED
 
 
 SKILLPATH = ".\\assets\\skills\\"

@@ -6,7 +6,7 @@ from logging import getLogger, info, error, INFO
 from sys import exit, argv
 from PyQt5.QtWidgets import QApplication
 
-from lib import config_helper
+from inc import config_helper
 from gui import overlay
 
 

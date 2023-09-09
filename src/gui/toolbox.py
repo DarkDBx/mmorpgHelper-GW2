@@ -6,7 +6,7 @@ from PyQt5.QtGui import QIcon, QPixmap, QStandardItemModel, QStandardItem, QIntV
 from PyQt5.QtWidgets import (QApplication, QComboBox, QWidget, QGridLayout, QLineEdit,
                             QGroupBox, QHBoxLayout, QLabel, QPushButton, QStyleFactory)
 
-from lib import recorder_helper, image_helper, config_helper
+from inc import recorder_helper, image_helper, config_helper
 
 
 class Toolbox(QWidget):
